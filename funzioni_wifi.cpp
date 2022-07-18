@@ -54,34 +54,35 @@ String https_request(String url, char* host, int httpsPort, char* fingerprint, W
     return String(client.readString());
 
   }
+}
 
-  String https_request_ins(String url, char* host, int httpsPort, WiFiClientSecure client) {
-    client.setInsecure();
-    Serial.print("connecting to ");
-    Serial.println(host);
-    if (!client.connect(host, httpsPort)) {
-      Serial.println("connection failed");
-
-    }
-
-
-
-    Serial.print("requesting URL: ");
-    Serial.println(url);
-
-    client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-                 "Host: " + host + "\r\n" +
-                 "User-Agent: BuildFailureDetectorESP8266\r\n" +
-                 "Connection: close\r\n\r\n");
-
-    while (client.connected()) { // until the client is connected, read out the response
-      String line = client.readStringUntil('\n');
-      if (line == "\r") {
-        Serial.println("headers received");
-        break;
-      }
-    }
-
-    return String(client.readString());
+String https_request_ins(String url, char* host, int httpsPort, WiFiClientSecure client) {
+  client.setInsecure();
+  Serial.print("connecting to ");
+  Serial.println(host);
+  if (!client.connect(host, httpsPort)) {
+    Serial.println("connection failed");
 
   }
+
+
+
+  Serial.print("requesting URL: ");
+  Serial.println(url);
+
+  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
+               "User-Agent: BuildFailureDetectorESP8266\r\n" +
+               "Connection: close\r\n\r\n");
+
+  while (client.connected()) { // until the client is connected, read out the response
+    String line = client.readStringUntil('\n');
+    if (line == "\r") {
+      Serial.println("headers received");
+      break;
+    }
+  }
+
+  return String(client.readString());
+
+}
