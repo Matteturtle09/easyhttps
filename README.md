@@ -1,3 +1,3 @@
 # easyhttps
-An easy library to deal with https requests on a esp8266 board.
+An easy to learn library to deal with https requests on a esp8266 board.
 
